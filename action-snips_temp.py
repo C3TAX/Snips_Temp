@@ -26,19 +26,19 @@ def read_configuration_file(configuration_file):
     except (IOError, configparser.Error) as e:
         return dict()
 
-
+    
 def msg_cpu_temp(hermes, intentMessage):
     conf = read_configuration_file(CONFIG_INI)
 
-f = open("/sys/class/thermal/thermal_zone0/temp", "r")
-t = f.readline (2)
+    f = open("/sys/class/thermal/thermal_zone0/temp", "r")
+    t = f.readline (2)
 
-if len(intentMessage.slots.house_room) > 0:
-    house_room = intentMessage.slots.house_room.first().value  # We extract the value from the slot "house_room"
-    result_sentence = "Das Licht wird in {} angeschaltet".format(
-        str(house_room))  # The response that will be said out loud by the TTS engine.
-else:
-    result_sentence = "Die CPU hat {t}"
+    if len(intentMessage.slots.house_room) > 0:
+        house_room = intentMessage.slots.house_room.first().value  # We extract the value from the slot "house_room"
+        result_sentence = "Das Licht wird in {} angeschaltet".format(
+            str(house_room))  # The response that will be said out loud by the TTS engine.
+    else:
+        result_sentence = "Die CPU hat {t}"
 
 current_session_id = intentMessage.session_id
 hermes.publish_end_session(current_session_id, result_sentence)
