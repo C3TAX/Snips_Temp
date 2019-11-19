@@ -40,8 +40,8 @@ def msg_cpu_temp(hermes, intentMessage):
     else:
         result_sentence = "Die CPU hat {t}"
 
-current_session_id = intentMessage.session_id
-hermes.publish_end_session(current_session_id, result_sentence)
+    current_session_id = intentMessage.session_id
+    hermes.publish_end_session(current_session_id, result_sentence)
 
 if __name__ == "__main__":
     mqtt_opts = MqttOptions()
