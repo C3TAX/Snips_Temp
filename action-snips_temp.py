@@ -37,7 +37,7 @@ def msg_cpu_temp(hermes, intentMessage):
         result_sentence = "Das Licht wird in {} angeschaltet".format(
             str(house_room))  # The response that will be said out loud by the TTS engine.
     else:
-        result_sentence = "Die CPU hat {t}"
+        result_sentence = "Die CPU hat "+t+" Grad"
 
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
