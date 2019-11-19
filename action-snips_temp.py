@@ -33,16 +33,12 @@ def msg_cpu_temp(hermes, intentMessage):
 f = open("/sys/class/thermal/thermal_zone0/temp", "r")
 t = f.readline (2)
 
-cputemp = "CPU temp: "+t
-
-#print (cputemp)
-
 if len(intentMessage.slots.house_room) > 0:
     house_room = intentMessage.slots.house_room.first().value  # We extract the value from the slot "house_room"
     result_sentence = "Das Licht wird in {} angeschaltet".format(
         str(house_room))  # The response that will be said out loud by the TTS engine.
 else:
-    result_sentence = cputemp
+    result_sentence = "Die CPU hat {t}"
 
 current_session_id = intentMessage.session_id
 hermes.publish_end_session(current_session_id, result_sentence)
@@ -50,5 +46,5 @@ hermes.publish_end_session(current_session_id, result_sentence)
 if __name__ == "__main__":
     mqtt_opts = MqttOptions()
     with Hermes(mqtt_options=mqtt_opts) as h:
-        h.subscribe_intent("cetax:cputemp", msg_cpu_temp)
+        h.subscribe_intent("cetax:cpu_temp", msg_cpu_temp)
         h.start()
